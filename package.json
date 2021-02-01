@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "dev": "lerna run dev --stream --parallel",
+    "build": "lerna run build --stream --parallel"
+  },
+  "name": "@cranejs/monorepo",
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "husky": "^4.3.0",
+    "jest": "^26.4.2",
+    "typescript": "^4.1.3"
+  }
+}

@@ -1,0 +1,17 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.buildCmd = buildCmd;
+
+var _core = require("@cranejs/core");
+
+var _shared = require("@cranejs/shared");
+
+async function buildCmd() {
+  const modules = Object.keys(_core.config.pages);
+  const task = await (0, _core.createBuildTask)(modules, _shared.BuildType.build);
+  await task();
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9jb21tYW5kcy9idWlsZC5qcyJdLCJuYW1lcyI6WyJidWlsZENtZCIsIm1vZHVsZXMiLCJPYmplY3QiLCJrZXlzIiwiY29uZmlnIiwicGFnZXMiLCJ0YXNrIiwiQnVpbGRUeXBlIiwiYnVpbGQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBQTs7QUFJQTs7QUFFTyxlQUFlQSxRQUFmLEdBQTJCO0FBQzlCLFFBQU1DLE9BQU8sR0FBR0MsTUFBTSxDQUFDQyxJQUFQLENBQVlDLGFBQU9DLEtBQW5CLENBQWhCO0FBQ0EsUUFBTUMsSUFBSSxHQUFHLE1BQU0sMkJBQ2ZMLE9BRGUsRUFFZk0sa0JBQVVDLEtBRkssQ0FBbkI7QUFLQSxRQUFNRixJQUFJLEVBQVY7QUFDSCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7XG4gICAgY29uZmlnLFxuICAgIGNyZWF0ZUJ1aWxkVGFza1xufSBmcm9tICdAY3JhbmVqcy9jb3JlJ1xuaW1wb3J0IHsgQnVpbGRUeXBlIH0gZnJvbSAnQGNyYW5lanMvc2hhcmVkJ1xuXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gYnVpbGRDbWQgKCkge1xuICAgIGNvbnN0IG1vZHVsZXMgPSBPYmplY3Qua2V5cyhjb25maWcucGFnZXMpXG4gICAgY29uc3QgdGFzayA9IGF3YWl0IGNyZWF0ZUJ1aWxkVGFzayhcbiAgICAgICAgbW9kdWxlcyxcbiAgICAgICAgQnVpbGRUeXBlLmJ1aWxkXG4gICAgKVxuXG4gICAgYXdhaXQgdGFzaygpXG59XG4iXX0=

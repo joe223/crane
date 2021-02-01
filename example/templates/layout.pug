@@ -1,0 +1,33 @@
+//- layout.pug
+doctype html
+html(lang="zh-cmn-Hans")
+    head
+        title #{title}
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover")
+        meta(http-equiv="ScreenOrientation", content="autoRotate:disabled")
+        link(rel='icon' href='/static/favicon.ico')
+        link(rel='stylesheet', type='text/css', href='/static/index.css')
+        block head
+
+    body
+        <!--[if lte IE 8]>
+            h1 Not support
+        <![endif]-->
+
+        block noscript
+            noscript
+                | We're sorry but app doesn't work properly without JavaScript enabled. Please enable it to continue.
+
+        block content
+            #app
+
+        script
+            | var NODE_ENV = "#{WEB_ENV.NODE_ENV}";
+
+            - if (WEB_ENV.NODE_ENV === 'production')
+                | <script type="javascript">console.log(NODE_ENV)</script>
+        block scripts
+
+        block footer
