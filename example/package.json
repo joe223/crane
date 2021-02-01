@@ -1,0 +1,17 @@
+{
+  "name": "@cranejs/example",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "main": "crane.config.js",
+  "scripts": {
+    "start": "DEBUG='Baker' crane dev",
+    "build": "DEBUG='Baker' crane build"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@cranejs/cli": "^0.0.1",
+    "@cranejs/shared": "^0.0.1"
+  }
+}
