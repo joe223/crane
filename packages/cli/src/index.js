@@ -14,7 +14,7 @@ import {
 
 const program = new Command()
 
-program.option('mode', 'Crane environment mode')
+program.option('--mode <mode>', 'Crane environment mode')
 
 program
     .command('dev')
