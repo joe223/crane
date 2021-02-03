@@ -13,8 +13,6 @@ export async function createBuildTask (modules, buildType) {
             buildType)
     })
 
-    logger.debug(modules)
-
     return async function () {
         return builder(builderConfig, buildType === BuildType.dev)
     }

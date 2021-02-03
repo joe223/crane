@@ -12,7 +12,6 @@
   "license": "MIT",
   "dependencies": {
     "@cranejs/cli": "^0.0.1",
-    "@cranejs/shared": "^0.0.1",
     "core-js": "^3.8.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

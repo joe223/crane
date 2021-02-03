@@ -132,8 +132,7 @@ export function createBuilderConfig (
 }
 
 export function builder (builderConfig, dev = false) {
-    logger.debug(builderConfig[0].module.rules[14])
-
+    logger.debug(builderConfig)
     if (dev) {
         const options = config.devServer
         const server = new WebpackDevServer(webpack(builderConfig), options)
@@ -145,7 +144,9 @@ export function builder (builderConfig, dev = false) {
             console.log('WebpackDevServer listening at localhost:', options.port);
         })
     } else {
-        webpack(builderConfig)
+        const compiler = webpack(builderConfig)
+
+        compiler.run((err, stats) => console.log(err))
     }
 }
 

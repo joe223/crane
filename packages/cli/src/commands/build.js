@@ -8,7 +8,7 @@ export async function buildCmd () {
     const modules = Object.keys(config.pages)
     const task = await createBuildTask(
         modules,
-        BuildType.build
+        BuildType.prod
     )
 
     await task()

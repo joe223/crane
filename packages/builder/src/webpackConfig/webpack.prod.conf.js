@@ -1,20 +1,22 @@
 import {
     config
 } from '@cranejs/core'
-const path = require('path')
-const utils = require('./utils')
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const baseWebpackConfig = require('./webpack.base.conf')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
+import merge from 'webpack-merge'
+import fs from 'fs'
+import path from 'path'
+import * as utils from './utils'
+import webpack from 'webpack'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import OptimizeCSSPlugin from 'optimize-css-assets-webpack-plugin'
+import CompressionWebpackPlugin from 'compression-webpack-plugin'
+import genBaseWebpackConfig from './webpack.base.conf'
 
-module.exports = function (module) {
+module.exports = function (pageConfig) {
+    const baseWebpackConfig = genBaseWebpackConfig(pageConfig)
     const webpackConfig = merge(baseWebpackConfig, {
         module: {
-            rules: utils.styleLoaders(module, {
+            rules: utils.styleLoaders({
                 sourceMap: config.build.productionSourceMap,
                 extract: true,
                 usePostCSS: true
@@ -23,7 +25,7 @@ module.exports = function (module) {
         devtool: config.build.productionSourceMap ? config.build.devtool : false,
         mode: 'production',
         optimization: {
-            moduleIds: 'hashed',
+            moduleIds: 'deterministic',
             splitChunks: {
                 cacheGroups: {
                     commons: {
@@ -45,8 +47,6 @@ module.exports = function (module) {
                     ? { safe: true, map: { inline: false } }
                     : { safe: true }
             }),
-            // keep module.id stable when vendor modules does not change
-            new webpack.HashedModuleIdsPlugin(),
             // enable scope hoisting
             new webpack.optimize.ModuleConcatenationPlugin()
         ]
