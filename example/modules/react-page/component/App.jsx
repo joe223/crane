@@ -6,5 +6,6 @@ export default function App (props) {
     return <div>
             <span>{count}</span>
             <button onClick={() => setCount(count + 1)}>Add</button>
+            <img src="/react-app/static/img.jpeg" alt=""/>
     </div>
 }

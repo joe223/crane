@@ -4,7 +4,7 @@ import path from 'path'
 const cwd = process.cwd()
 const defaultConfig = {
     useEslint: true,
-    devtool: '#source-map',
+    devtool: 'source-map',
     productionGzip: false,
     productionGzipExtensions: ['js', 'css'],
     assetsRoot: path.resolve(cwd, './dist'),
@@ -55,7 +55,7 @@ const defaultConfig = {
          * Source Maps
          */
 
-        productionSourceMap: process.env.MODE !== 'production',
+        productionSourceMap: process.env.CRANE_BUILD_MODE !== 'production',
         // https://webpack.js.org/configuration/devtool/#production
         devtool: 'source-map',
 

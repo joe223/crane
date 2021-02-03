@@ -65,7 +65,7 @@ export function createBuilderConfig (
             entry,
             defaultEntryName,
             'index.html'))
-        // Multiple entry file
+    // Multiple entry file
     } else {
         Object.keys(buildConfig.entries).forEach(entryName => {
             const entry = buildConfig.entries[entryName]

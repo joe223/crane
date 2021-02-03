@@ -1,5 +1,14 @@
 module.exports = {
+    devServer: {
+        open: true
+    },
     pages: {
+        index: {
+            title: 'Crane',
+            entry: 'index/index.js',
+            template: 'index/index.pug',
+            output: '/'
+        },
         'vue-page': {
             title: 'Vue App',
             entry: 'vue-page/index.jsx',
@@ -11,7 +20,8 @@ module.exports = {
             entry: 'react-page/index.jsx',
             template: 'vue-page/index.pug',
             output: 'react-app',
-            jsxType: 'react'
+            jsxType: 'react',
+            static: 'react-page/static'
         }
     }
 }

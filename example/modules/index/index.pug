@@ -1,0 +1,22 @@
+extends ../../templates/layout.pug
+
+block content
+    -
+        const list = [
+            {
+                name: 'react-app',
+                path: '/react-app'
+            },
+            {
+                name: 'vue-app',
+                path: '/vue-page'
+            }
+        ]
+
+    div
+        | webenv
+    pre #{JSON.stringify(WEB_ENV, null, 4)}
+    ul
+        each item in list
+            li
+                a(href="#{item.path}")= item.name

@@ -8,17 +8,28 @@ import {
 import {
     buildCmd
 } from './commands/build'
+import {
+    parseOpt
+} from './utils'
 
 const program = new Command()
+
+program.option('mode', 'Crane environment mode')
 
 program
     .command('dev')
     .description('Run development server')
-    .action(devCmd)
+    .action(async function () {
+        parseOpt(program.opts())
+        await devCmd(program)
+    })
 
 program
     .command('build')
     .description('Build production version')
-    .action(buildCmd)
+    .action(async function () {
+        parseOpt(program.opts())
+        await buildCmd(program)
+    })
 
 program.parse(process.argv)

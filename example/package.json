@@ -6,7 +6,7 @@
   "main": "crane.config.js",
   "scripts": {
     "start": "DEBUG='Baker' crane dev",
-    "build": "DEBUG='Baker' crane build"
+    "build": "DEBUG='Baker' crane build --mode=production"
   },
   "author": "",
   "license": "MIT",
