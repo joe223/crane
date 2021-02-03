@@ -11,11 +11,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@babel/plugin-transform-runtime": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
     "@cranejs/cli": "^0.0.1",
     "@cranejs/shared": "^0.0.1",
-    "babel-plugin-transform-vue-jsx": "^4.0.1",
     "core-js": "^3.8.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
