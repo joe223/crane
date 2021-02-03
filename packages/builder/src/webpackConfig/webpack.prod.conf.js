@@ -9,11 +9,7 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-
-console.log(`正在构建 production 版本，
-    当前环境设置: ${process.env.NODE_ENV},
-    当前 MODE 设置: ${process.env.MODE}`)
-
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
 module.exports = function (module) {
     const webpackConfig = merge(baseWebpackConfig, {
@@ -57,8 +53,6 @@ module.exports = function (module) {
     })
 
     if (config.build.productionGzip) {
-        const CompressionWebpackPlugin = require('compression-webpack-plugin')
-
         webpackConfig.plugins.push(
             new CompressionWebpackPlugin({
                 asset: '[path].gz[query]',

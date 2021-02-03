@@ -1,16 +1,8 @@
 import {
     config
 } from '@cranejs/core'
-const utils = require('./utils')
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const baseWebpackConfig = require('./webpack.base.conf')
 
-console.debug(`正在构建 testing 版本，
-    当前环境设置: ${process.env.NODE_ENV},
-    当前 MODE 设置: ${process.env.MODE}`)
-
-module.exports = function (module) {
+export default function genConfig (module) {
     const webpackConfig = merge(baseWebpackConfig, {
         output: {
             path: config.build.assetsRoot,

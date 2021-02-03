@@ -172,7 +172,7 @@ function genTemplateParametersGenerator (entry) {
             title: entry.title || entry.templateParameters.title,
             ...entry.templateParameters,
             compilation,
-            webpackConfig,
+            webpackConfig: entry.options,
             htmlWebpackPlugin: {
                 files: assets,
                 options: options

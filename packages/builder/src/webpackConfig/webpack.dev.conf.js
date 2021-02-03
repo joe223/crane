@@ -2,22 +2,22 @@ import {
     config
 } from '@cranejs/core'
 import merge from 'webpack-merge'
-
-const fs = require('fs')
-const path = require('path')
-const utils = require('./utils')
-const webpack = require('webpack')
-const baseWebpackConfig = require('./webpack.base.conf')
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+import fs from 'fs'
+import path from 'path'
+import * as utils from './utils'
+import webpack from 'webpack'
+import genBaseWebpackConfig from './webpack.base.conf'
+import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin'
 
 // const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
-module.exports = function (module) {
+module.exports = function (pageConfig) {
+    const baseWebpackConfig = genBaseWebpackConfig(pageConfig)
     const devWebpackConfig = merge(baseWebpackConfig, {
         mode: 'development',
         module: {
-            rules: utils.styleLoaders(module, {
+            rules: utils.styleLoaders({
                 sourceMap: config.dev.cssSourceMap,
                 extract: false,
                 usePostCSS: true

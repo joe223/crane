@@ -14,10 +14,8 @@ const defaultConfig = {
     devServer: {
         hot: true,
         port: 8080,
-        autoOpenBrowser: false,
-        errorOverlay: true,
-        notifyOnErrors: true,
-        poll: false
+        open: true,
+        overlay: true
     },
 
     dev: {
