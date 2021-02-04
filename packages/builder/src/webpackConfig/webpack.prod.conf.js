@@ -1,6 +1,4 @@
-import {
-    config
-} from '@cranejs/core'
+import { config } from '@cranejs/core'
 import merge from 'webpack-merge'
 import fs from 'fs'
 import path from 'path'
@@ -19,10 +17,12 @@ module.exports = function (pageConfig) {
             rules: utils.styleLoaders({
                 sourceMap: config.build.productionSourceMap,
                 extract: true,
-                usePostCSS: true
-            })
+                usePostCSS: true,
+            }),
         },
-        devtool: config.build.productionSourceMap ? config.build.devtool : false,
+        devtool: config.build.productionSourceMap
+            ? config.build.devtool
+            : false,
         mode: 'production',
         optimization: {
             moduleIds: 'deterministic',
@@ -31,12 +31,12 @@ module.exports = function (pageConfig) {
                     commons: {
                         test: /[\\/]node_modules[\\/]/,
                         name: 'vendors',
-                        chunks: 'all'
-                    }
+                        chunks: 'all',
+                    },
                 },
-                minChunks: 2
+                minChunks: 2,
             },
-            minimize: true
+            minimize: true,
         },
         plugins: [
             // extract css into its own file
@@ -45,11 +45,11 @@ module.exports = function (pageConfig) {
             new OptimizeCSSPlugin({
                 cssProcessorOptions: config.build.productionSourceMap
                     ? { safe: true, map: { inline: false } }
-                    : { safe: true }
+                    : { safe: true },
             }),
             // enable scope hoisting
-            new webpack.optimize.ModuleConcatenationPlugin()
-        ]
+            new webpack.optimize.ModuleConcatenationPlugin(),
+        ],
     })
 
     if (config.build.productionGzip) {
@@ -59,11 +59,11 @@ module.exports = function (pageConfig) {
                 algorithm: 'gzip',
                 test: new RegExp(
                     '\\.(' +
-                    config.build.productionGzipExtensions.join('|') +
-                    ')$'
+                        config.build.productionGzipExtensions.join('|') +
+                        ')$'
                 ),
                 threshold: 10240,
-                minRatio: 0.8
+                minRatio: 0.8,
             })
         )
     }

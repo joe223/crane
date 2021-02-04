@@ -1,7 +1,3 @@
-export {
-    config
-} from './config'
+export { config } from './config'
 
-export {
-    createBuildTask
-} from './buildTask'
+export { createBuildTask } from './buildTask'

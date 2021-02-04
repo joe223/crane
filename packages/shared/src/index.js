@@ -1,7 +1,5 @@
-export {
-    logger
-} from './logger'
+export { logger } from './logger'
 
-export {
-    BuildType
-} from './enums'
+export { BuildType } from './enums'
+
+export { cleanWorkspace } from './fs'

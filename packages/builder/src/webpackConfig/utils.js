@@ -1,25 +1,20 @@
-import path from 'path'
-import rimraf from 'rimraf'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import {
-    config
-} from '@cranejs/core'
 
-export function cssLoaders (options) {
+export function cssLoaders(options) {
     options = options || {}
 
     const cssLoader = {
         loader: 'css-loader',
         options: {
-            sourceMap: options.sourceMap
-        }
+            sourceMap: options.sourceMap,
+        },
     }
 
     const postcssLoader = {
         loader: 'postcss-loader',
         options: {
-            sourceMap: options.sourceMap
-        }
+            sourceMap: options.sourceMap,
+        },
     }
 
     // generate loader string to be used with extract text plugin
@@ -34,15 +29,13 @@ export function cssLoaders (options) {
             loaders.push({
                 loader: loader + '-loader',
                 options: Object.assign({}, loaderOptions, {
-                    sourceMap: options.sourceMap
-                })
+                    sourceMap: options.sourceMap,
+                }),
             })
         }
 
         return [
-            options.extract
-                ? MiniCssExtractPlugin.loader
-                : 'vue-style-loader',
+            options.extract ? MiniCssExtractPlugin.loader : 'vue-style-loader',
         ].concat(loaders)
     }
 
@@ -54,11 +47,11 @@ export function cssLoaders (options) {
         sass: generateLoaders('sass', { indentedSyntax: true }),
         scss: generateLoaders('sass'),
         stylus: generateLoaders('stylus'),
-        styl: generateLoaders('stylus')
+        styl: generateLoaders('stylus'),
     }
 }
 
-export function styleLoaders  (options) {
+export function styleLoaders(options) {
     const output = []
     const loaders = exports.cssLoaders(options)
 
@@ -66,24 +59,9 @@ export function styleLoaders  (options) {
         const loader = loaders[extension]
         output.push({
             test: new RegExp('\\.' + extension + '$'),
-            use: loader
+            use: loader,
         })
     }
 
     return output
-}
-
-export function cleanWorkspace () {
-    try {
-        rimraf.sync(path.join(__dirname, '../dist'))
-        console.log('清空 dist 目录')
-    } catch (e) {
-        console.error(e)
-    }
-    try {
-        rimraf.sync(path.join(__dirname, '../bundle_analyze'))
-        console.log('清空 bundle_analyze 目录')
-    } catch (e) {
-        console.error(e)
-    }
 }

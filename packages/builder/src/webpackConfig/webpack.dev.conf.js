@@ -1,6 +1,4 @@
-import {
-    config
-} from '@cranejs/core'
+import { config } from '@cranejs/core'
 import merge from 'webpack-merge'
 import fs from 'fs'
 import path from 'path'
@@ -20,8 +18,8 @@ module.exports = function (pageConfig) {
             rules: utils.styleLoaders({
                 sourceMap: config.dev.cssSourceMap,
                 extract: false,
-                usePostCSS: true
-            })
+                usePostCSS: true,
+            }),
         },
         // cheap-module-eval-source-map is faster for development
         devtool: config.dev.devtool,
@@ -44,12 +42,12 @@ module.exports = function (pageConfig) {
             watchOptions: {
                 poll: config.dev.poll,
             },
-            https: !!config.dev.https
+            https: !!config.dev.https,
         },
         plugins: [
             new webpack.HotModuleReplacementPlugin(),
-            new FriendlyErrorsWebpackPlugin()
-        ]
+            new FriendlyErrorsWebpackPlugin(),
+        ],
     })
 
     return devWebpackConfig

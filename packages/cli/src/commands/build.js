@@ -1,15 +1,9 @@
-import {
-    config,
-    createBuildTask
-} from '@cranejs/core'
+import { config, createBuildTask } from '@cranejs/core'
 import { BuildType } from '@cranejs/shared'
 
-export async function buildCmd () {
+export async function buildCmd() {
     const modules = Object.keys(config.pages)
-    const task = await createBuildTask(
-        modules,
-        BuildType.prod
-    )
+    const task = await createBuildTask(modules, BuildType.prod)
 
     await task()
 }

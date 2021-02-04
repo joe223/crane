@@ -15,7 +15,7 @@ const defaultConfig = {
         hot: true,
         port: 8080,
         open: true,
-        overlay: true
+        overlay: true,
     },
 
     dev: {
@@ -43,7 +43,7 @@ const defaultConfig = {
         // https://vue-loader.vuejs.org/en/options.html#cachebusting
         cacheBusting: true,
 
-        cssSourceMap: true
+        cssSourceMap: true,
     },
 
     build: {
@@ -70,13 +70,14 @@ const defaultConfig = {
         // View the bundle analyzer report after build finishes:
         // `npm run build --report`
         // Set to `true` or `false` to always turn it on or off
-        bundleAnalyzerReport: process.env.npm_config_report
+        bundleAnalyzerReport: process.env.npm_config_report,
     },
 
-    pages: []
+    pages: [],
 }
-const config = deepmerge(defaultConfig, require(path.resolve(cwd, 'crane.config.js')))
+const config = deepmerge(
+    defaultConfig,
+    require(path.resolve(cwd, 'crane.config.js'))
+)
 
-export {
-    config
-}
+export { config }

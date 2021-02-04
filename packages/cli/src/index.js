@@ -1,16 +1,9 @@
-import {
-    Command
-} from 'commander'
+import { Command } from 'commander'
 import 'source-map-support/register'
-import {
-    devCmd
-} from './commands/dev'
-import {
-    buildCmd
-} from './commands/build'
-import {
-    parseOpt
-} from './utils'
+import { devCmd } from './commands/dev'
+import { buildCmd } from './commands/build'
+import { parseOpt } from './utils'
+import { cleanWorkspace } from '@cranejs/shared'
 
 const program = new Command()
 
@@ -29,6 +22,7 @@ program
     .description('Build production version')
     .action(async function () {
         parseOpt(program.opts())
+        cleanWorkspace()
         await buildCmd(program)
     })
 
