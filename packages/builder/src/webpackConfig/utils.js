@@ -6,6 +6,7 @@ export function cssLoaders(options) {
     const cssLoader = {
         loader: 'css-loader',
         options: {
+            esModule: false,
             sourceMap: options.sourceMap,
         },
     }

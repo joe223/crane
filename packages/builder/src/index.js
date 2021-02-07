@@ -158,7 +158,13 @@ export function builder(builderConfig, dev = false) {
     } else {
         const compiler = webpack(builderConfig)
 
-        compiler.run((err, stats) => console.log(err))
+        compiler.run((err, stats) => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(stats)
+            }
+        })
     }
 }
 
@@ -222,7 +228,7 @@ function genHtmlWebpackPluginConfig(
             inject: true,
             chunks: ['vendors', entryName],
             title: entry.title || entry.templateParameters.title,
-            templateParameters: genTemplateParametersGenerator(entry),
+            templateParameters: genTemplateParametersGenerator(entry)
         })
     } else {
         return new HtmlWebpackPlugin({
@@ -240,7 +246,7 @@ function genHtmlWebpackPluginConfig(
                 // https://github.com/kangax/html-minifier#options-quick-reference
             },
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-            chunksSortMode: 'auto',
+            chunksSortMode: 'auto'
         })
     }
 }

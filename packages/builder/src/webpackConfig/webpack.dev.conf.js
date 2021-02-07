@@ -24,7 +24,6 @@ module.exports = function (pageConfig) {
         // cheap-module-eval-source-map is faster for development
         devtool: config.dev.devtool,
 
-        // these devServer options should be customized in /config/index.js
         devServer: {
             clientLogLevel: 'warning',
             hot: true,

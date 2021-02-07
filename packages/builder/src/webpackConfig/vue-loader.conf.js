@@ -1,5 +1,8 @@
+import path from 'path'
 import { config } from '@cranejs/core'
-const utils = require('./utils')
+import * as utils from './utils'
+
+const cwd = process.cwd()
 const isProduction = process.env.NODE_ENV === 'production'
 const sourceMapEnabled = isProduction
     ? config.build.productionSourceMap
@@ -18,4 +21,5 @@ module.exports = {
         img: 'src',
         image: 'xlink:href',
     },
+    compiler: require(path.resolve(cwd, './node_modules/vue-template-compiler'))
 }

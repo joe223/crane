@@ -46,7 +46,7 @@ export default function genBaseConfig(pageConfig) {
         resolveLoader: {
             modules: [
                 path.resolve(__dirname, '../../node_modules'),
-                'node_modules',
+                path.resolve(cwd, './node_modules')
             ],
         },
         module: {
