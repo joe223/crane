@@ -219,7 +219,7 @@ function genHtmlWebpackPluginConfig(
 ) {
     const template = entry.template
         ? resolvePath(entry.template)
-        : path.join(__dirname, '../template/index.pug')
+        : config.defaultTemplate
 
     if (buildType === BuildType.dev) {
         return new HtmlWebpackPlugin({

@@ -3,11 +3,13 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 export function cssLoaders(options) {
     options = options || {}
 
+    // https://github.com/webpack-contrib/css-loader/issues/1157
+    // https://github.com/webpack-contrib/css-loader/commit/bc19ddd8779dafbc2a420870a3cb841041ce9c7c
     const cssLoader = {
         loader: 'css-loader',
         options: {
             esModule: false,
-            sourceMap: options.sourceMap,
+            sourceMap: options.sourceMap
         },
     }
 

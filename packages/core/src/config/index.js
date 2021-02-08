@@ -9,6 +9,7 @@ const defaultConfig = {
     productionGzipExtensions: ['js', 'css'],
     assetsRoot: path.resolve(cwd, './dist'),
     assetsSubDirectory: 'static',
+    defaultTemplate: path.join(cwd, './templates/index.pug'),
 
     // https://webpack.js.org/configuration/dev-server/
     devServer: {

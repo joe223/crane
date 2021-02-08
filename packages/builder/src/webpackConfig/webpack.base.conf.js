@@ -18,7 +18,7 @@ const createLintingRule = () => ({
         formatter: require('eslint-friendly-formatter'),
     },
 })
-const assetsPath = (p) => path.join('static', p)
+const assetsPath = (p) => path.join('assets', p)
 
 export default function genBaseConfig(pageConfig) {
     const isVueApp = pageConfig.jsxType === 'react' ? false : true

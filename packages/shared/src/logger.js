@@ -20,7 +20,6 @@ export const logger = {
         desc && console.log(desc)
     },
     debug(msg) {
-        console.log(msg)
         debug(msg)
     },
 }
