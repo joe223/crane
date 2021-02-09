@@ -1,5 +1,5 @@
-import { config, createBuildTask } from '@cranejs/core'
-import { BuildType } from '@cranejs/shared'
+import { createBuildTask } from '@cranejs/core'
+import { config, BuildType } from '@cranejs/shared'
 
 export async function buildCmd() {
     const modules = Object.keys(config.pages)

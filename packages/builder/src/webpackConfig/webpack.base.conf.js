@@ -1,5 +1,4 @@
-import { config } from '@cranejs/core'
-import { logger } from '@cranejs/shared'
+import { config, logger } from '@cranejs/shared'
 import * as path from 'path'
 import createVueLoaderConfig from './vue-loader.conf'
 

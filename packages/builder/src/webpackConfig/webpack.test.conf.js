@@ -1,4 +1,4 @@
-import { config } from '@cranejs/core'
+import { config } from '@cranejs/shared'
 
 export default function genConfig(module) {
     const webpackConfig = merge(baseWebpackConfig, {

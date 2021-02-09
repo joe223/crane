@@ -1,5 +1,5 @@
 import path from 'path'
-import { config } from '@cranejs/core'
+import { config } from '@cranejs/shared'
 import * as utils from './utils'
 
 const cwd = process.cwd()

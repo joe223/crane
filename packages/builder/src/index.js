@@ -1,6 +1,5 @@
 import path from 'path'
-import { config } from '@cranejs/core'
-import { logger, BuildType } from '@cranejs/shared'
+import { config, logger, BuildType } from '@cranejs/shared'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'

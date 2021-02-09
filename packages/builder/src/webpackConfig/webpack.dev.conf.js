@@ -1,4 +1,4 @@
-import { config } from '@cranejs/core'
+import { config } from '@cranejs/shared'
 import merge from 'webpack-merge'
 import fs from 'fs'
 import path from 'path'
