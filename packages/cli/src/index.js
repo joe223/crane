@@ -13,6 +13,7 @@ program
     .command('dev')
     .description('Run development server')
     .action(async function () {
+        process.env.NODE_ENV = 'development'
         parseOpt(program.opts())
         await devCmd(program)
     })
@@ -21,6 +22,7 @@ program
     .command('build')
     .description('Build production version')
     .action(async function () {
+        process.env.NODE_ENV = 'production'
         parseOpt(program.opts())
         cleanWorkspace()
         await buildCmd(program)

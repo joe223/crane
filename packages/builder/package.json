@@ -35,6 +35,8 @@
     "@babel/preset-react": "^7.12.13",
     "@cranejs/core": "^0.0.0",
     "@cranejs/shared": "^0.0.1",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
+    "@vue/babel-preset-jsx": "^1.2.4",
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-vue-jsx": "^4.0.1",
     "compression-webpack-plugin": "^7.1.2",

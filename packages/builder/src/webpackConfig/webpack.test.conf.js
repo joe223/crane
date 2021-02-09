@@ -3,7 +3,7 @@ import { config } from '@cranejs/core'
 export default function genConfig(module) {
     const webpackConfig = merge(baseWebpackConfig, {
         output: {
-            path: config.build.assetsRoot,
+            path: config.assetsRoot,
             filename: '[name].js',
             publicPath:
                 process.env.NODE_ENV === 'production'
@@ -15,7 +15,7 @@ export default function genConfig(module) {
         module: {
             rules: utils.styleLoaders(module),
         },
-        devtool: '#inline-source-map',
+        devtool: 'inline-cheap-module-source-map',
         resolveLoader: {
             alias: {
                 // necessary to to make lang="scss" work in test when using vue-loader's ?inject option

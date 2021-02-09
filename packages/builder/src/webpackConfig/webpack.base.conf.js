@@ -1,8 +1,9 @@
 import { config } from '@cranejs/core'
 import { logger } from '@cranejs/shared'
-const path = require('path')
+import * as path from 'path'
+import createVueLoaderConfig from './vue-loader.conf'
+
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const vueLoaderConfig = require('./vue-loader.conf')
 const cwd = process.cwd()
 
 function resolve(dir) {
@@ -28,12 +29,16 @@ export default function genBaseConfig(pageConfig) {
     logger.debug('isVueApp' + isVueApp)
 
     if (isVueApp) {
-        babelPlugins.push(
-            require('babel-plugin-transform-vue-jsx'),
-            require('@babel/plugin-syntax-jsx')
-        )
+        babelPreset.push([
+            require.resolve('@vue/babel-preset-jsx'),
+            {
+                injectH: false
+            }
+        ])
     } else {
-        babelPreset.push(require('@babel/preset-react'))
+        babelPreset.push([
+            require.resolve('@babel/preset-react')
+        ])
     }
     return {
         context: resolve('.'),
@@ -59,7 +64,7 @@ export default function genBaseConfig(pageConfig) {
                 {
                     test: /\.vue$/,
                     loader: 'vue-loader',
-                    options: vueLoaderConfig,
+                    options: createVueLoaderConfig(pageConfig),
                 },
                 {
                     test: /\.(js|jsx)$/,
@@ -95,6 +100,7 @@ export default function genBaseConfig(pageConfig) {
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
+                        esModule: false,
                         name: assetsPath('img/[name].[hash:7].[ext]'),
                     },
                 },
@@ -102,6 +108,7 @@ export default function genBaseConfig(pageConfig) {
                     test: /\.(svg)(\?.*)?$/,
                     loader: 'file-loader',
                     options: {
+                        esModule: false,
                         name: assetsPath('img/[name].[hash:7].[ext]'),
                     },
                 },
@@ -118,6 +125,7 @@ export default function genBaseConfig(pageConfig) {
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
+                        esModule: false,
                         name: assetsPath('fonts/[name].[hash:7].[ext]'),
                     },
                 },

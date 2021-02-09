@@ -1,5 +1,33 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
+function isUrlRequestable(url) {
+    // Protocol-relative URLs
+    if (/^\/\//.test(url)) {
+        return false;
+    }
+
+    // `file:` protocol
+    if (/^file:/i.test(url)) {
+        return true;
+    }
+
+    // Absolute URLs
+    if (/^\/\w+/i.test(url)) {
+        return false
+    }
+
+    if (/^[a-z][a-z0-9+.-]*:/i.test(url) && !matchNativeWin32Path.test(url)) {
+        return false;
+    }
+
+    // `#` URLs
+    if (/^#/.test(url)) {
+        return false;
+    }
+
+    return true;
+}
+
 export function cssLoaders(options) {
     options = options || {}
 
@@ -9,6 +37,9 @@ export function cssLoaders(options) {
         loader: 'css-loader',
         options: {
             esModule: false,
+            url(url) {
+                return isUrlRequestable(url);
+            },
             sourceMap: options.sourceMap
         },
     }

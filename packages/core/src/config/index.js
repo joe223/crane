@@ -20,10 +20,6 @@ const defaultConfig = {
     },
 
     dev: {
-        host: 'localhost',
-        // Paths
-        assetsSubDirectory: 'static',
-
         // Use Eslint Loader?
         // If true, your code will be linted during bundling and
         // linting errors and warnings will be shown in the console.
@@ -39,19 +35,10 @@ const defaultConfig = {
         // https://webpack.js.org/configuration/devtool/#development
         devtool: 'inline-cheap-module-source-map',
 
-        // If you have problems debugging vue-files in devtools,
-        // set this to false - it *may* help
-        // https://vue-loader.vuejs.org/en/options.html#cachebusting
-        cacheBusting: true,
-
         cssSourceMap: true,
     },
 
     build: {
-        // Paths
-        assetsRoot: path.resolve(cwd, './dist'),
-        assetsSubDirectory: 'static',
-
         /**
          * Source Maps
          */
