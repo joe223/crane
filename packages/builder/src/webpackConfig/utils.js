@@ -27,10 +27,7 @@ function isUrlRequestable(url) {
 
     return true;
 }
-
-export function cssLoaders(options) {
-    options = options || {}
-
+export function cssLoaders(options = {}) {
     // https://github.com/webpack-contrib/css-loader/issues/1157
     // https://github.com/webpack-contrib/css-loader/commit/bc19ddd8779dafbc2a420870a3cb841041ce9c7c
     const cssLoader = {
@@ -43,7 +40,6 @@ export function cssLoaders(options) {
             sourceMap: options.sourceMap
         },
     }
-
     const postcssLoader = {
         loader: 'postcss-loader',
         options: {
@@ -53,24 +49,35 @@ export function cssLoaders(options) {
 
     // generate loader string to be used with extract text plugin
     function generateLoaders(loader, loaderOptions) {
-        const loaders = [cssLoader]
+        const loaders = {
+            cssLoader: {
+                ...cssLoader,
+            }
+        }
 
         if (options.usePostCSS) {
-            loaders.push(postcssLoader)
+            loaders.postcssLoader = {
+                ...postcssLoader,
+                after: 'cssLoader'
+            }
         }
 
         if (loader) {
-            loaders.push({
+            loaders[loader] = {
                 loader: loader + '-loader',
                 options: Object.assign({}, loaderOptions, {
                     sourceMap: options.sourceMap,
                 }),
-            })
+                after: loaders.postcssLoader ? 'postcssLoader' : 'cssLoader'
+            }
         }
 
-        return [
-            options.extract ? MiniCssExtractPlugin.loader : 'vue-style-loader',
-        ].concat(loaders)
+        loaders.styleLoader = {
+            loader: options.extract ? MiniCssExtractPlugin.loader : 'vue-style-loader',
+            before: 'cssLoader'
+        }
+
+        return loaders
     }
 
     // https://vue-loader.vuejs.org/en/configurations/extract-css.html
@@ -86,15 +93,17 @@ export function cssLoaders(options) {
 }
 
 export function styleLoaders(options) {
-    const output = []
-    const loaders = exports.cssLoaders(options)
+    const output = {}
+
+    const loaders = cssLoaders(options)
 
     for (const extension in loaders) {
         const loader = loaders[extension]
-        output.push({
+
+        output[`style-${extension}`] = {
             test: new RegExp('\\.' + extension + '$'),
             use: loader,
-        })
+        }
     }
 
     return output

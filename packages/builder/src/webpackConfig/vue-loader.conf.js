@@ -11,10 +11,6 @@ export default function createVueLoaderConfig () {
         : config.dev.cssSourceMap
 
     return {
-        loaders: utils.cssLoaders({
-            sourceMap: sourceMapEnabled,
-            extract: isProduction,
-        }),
         cssSourceMap: sourceMapEnabled,
         transformToRequire: {
             video: ['src', 'poster'],

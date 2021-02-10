@@ -19,7 +19,7 @@ export const logger = {
         console.log(Chalk.hex('#333333').bgGreenBright('Baker'), msg)
         desc && console.log(desc)
     },
-    debug(msg) {
-        debug(msg)
+    debug(...msg) {
+        debug(...msg)
     },
 }

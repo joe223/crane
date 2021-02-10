@@ -23,5 +23,9 @@ module.exports = {
             jsxType: 'react',
             static: 'react-page/static'
         }
-    }
+    },
+
+    plugins: [
+        '@cranejs/plugin-jsx'
+    ]
 }

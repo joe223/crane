@@ -1,21 +1,20 @@
-import { config } from '@cranejs/shared'
+import { config, logger } from '@cranejs/shared'
 import merge from 'webpack-merge'
+import deepMerge from 'deepmerge'
 import fs from 'fs'
 import path from 'path'
-import * as utils from './utils'
 import webpack from 'webpack'
-import genBaseWebpackConfig from './webpack.base.conf'
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin'
+import genBaseWebpackConfig from './webpack.base.conf'
+import * as utils from './utils'
 
-// const HOST = process.env.HOST
-const PORT = process.env.PORT && Number(process.env.PORT)
+export default function (pageConfig) {
+    const baseConfig = genBaseWebpackConfig(pageConfig)
 
-module.exports = function (pageConfig) {
-    const baseWebpackConfig = genBaseWebpackConfig(pageConfig)
-    const devWebpackConfig = merge(baseWebpackConfig, {
+    baseConfig.merge({
         mode: 'development',
         module: {
-            rules: utils.styleLoaders({
+            rule: utils.styleLoaders({
                 sourceMap: config.dev.cssSourceMap,
                 extract: false,
                 usePostCSS: true,
@@ -24,30 +23,22 @@ module.exports = function (pageConfig) {
         // cheap-module-eval-source-map is faster for development
         devtool: config.dev.devtool,
 
-        devServer: {
+        devServer: deepMerge({
             clientLogLevel: 'warning',
             hot: true,
             contentBase: false, // since we use CopyWebpackPlugin.
             compress: true,
-            host: config.dev.host,
-            port: PORT || config.dev.port,
-            // disableHostCheck: true,
-            open: config.dev.autoOpenBrowser,
-            overlay: config.dev.errorOverlay
-                ? { warnings: false, errors: true }
-                : false,
-            proxy: config.dev.proxyTable,
             quiet: true, // necessary for FriendlyErrorsPlugin
-            watchOptions: {
-                poll: config.dev.poll,
+        }, config.devServer),
+        plugin: {
+            HotModuleReplacementPlugin: {
+                plugin: webpack.HotModuleReplacementPlugin
             },
-            https: !!config.dev.https,
+            FriendlyErrorsWebpackPlugin: {
+                plugin: FriendlyErrorsWebpackPlugin
+            },
         },
-        plugins: [
-            new webpack.HotModuleReplacementPlugin(),
-            new FriendlyErrorsWebpackPlugin(),
-        ],
     })
 
-    return devWebpackConfig
+    return baseConfig
 }

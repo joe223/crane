@@ -1,5 +1,6 @@
 import { config, logger } from '@cranejs/shared'
 import * as path from 'path'
+import WebpackConfig from 'webpack-chain'
 import createVueLoaderConfig from './vue-loader.conf'
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
@@ -20,26 +21,10 @@ const createLintingRule = () => ({
 })
 const assetsPath = (p) => path.join('assets', p)
 
-export default function genBaseConfig(pageConfig) {
-    const isVueApp = pageConfig.jsxType === 'react' ? false : true
-    const babelPlugins = []
-    const babelPreset = []
+export default function genBaseWebpackConfig(pageConfig) {
+    const webpackConfig = new WebpackConfig()
 
-    logger.debug('isVueApp' + isVueApp)
-
-    if (isVueApp) {
-        babelPreset.push([
-            require.resolve('@vue/babel-preset-jsx'),
-            {
-                injectH: false
-            }
-        ])
-    } else {
-        babelPreset.push([
-            require.resolve('@babel/preset-react')
-        ])
-    }
-    return {
+    webpackConfig.merge({
         context: resolve('.'),
         resolve: {
             extensions: ['.js', '.vue', '.json', '.jsx'],
@@ -54,87 +39,107 @@ export default function genBaseConfig(pageConfig) {
             ],
         },
         module: {
-            rules: [
-                ...(config.useEslint ? [createLintingRule()] : []),
-                {
+            rule: {
+                pug: {
                     test: /\.pug$/,
-                    loader: 'pug-loader',
+                    use: {
+                        pug: {
+                            loader: 'pug-loader',
+                        }
+                    }
                 },
-                {
+                vue: {
                     test: /\.vue$/,
-                    loader: 'vue-loader',
-                    options: createVueLoaderConfig(pageConfig),
+                    use: {
+                        vue: {
+                            loader: 'vue-loader',
+                            options: createVueLoaderConfig(pageConfig),
+                        }
+                    }
                 },
-                {
-                    test: /\.(js|jsx)$/,
-                    loader: 'babel-loader',
+                js: {
+                    test: /\.(m?js|jsx)$/,
                     include: [
                         resolve('modules'),
                         resolve('test'),
-                        resolve('node_modules/webpack-dev-server/client'),
+                        resolve('__test__'),
+                        require.resolve('webpack-dev-server/client'),
                     ],
-                    options: {
-                        presets: [
-                            [
-                                '@babel/preset-env',
-                                {
-                                    useBuiltIns: 'usage',
-                                    corejs: 3,
-                                    targets: {
-                                        browsers: [
-                                            '> 1%',
-                                            'last 2 versions',
-                                            'not ie <= 8',
-                                        ],
-                                    },
-                                },
-                            ],
-                            ...babelPreset,
-                        ],
-                        plugins: babelPlugins,
-                    },
+                    use: {
+                        babel: {
+                            loader: 'babel-loader',
+                            options: {
+                                presets: [
+                                    [
+                                        '@babel/preset-env',
+                                        {
+                                            useBuiltIns: 'usage',
+                                            corejs: 3,
+                                            targets: {
+                                                browsers: [
+                                                    '> 1%',
+                                                    'last 2 versions',
+                                                    'not ie <= 8',
+                                                ],
+                                            },
+                                        },
+                                    ]
+                                ]
+                            },
+                        }
+                    }
                 },
-                {
-                    test: /\.(png|jpe?g|gif)(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        limit: 10000,
-                        esModule: false,
-                        name: assetsPath('img/[name].[hash:7].[ext]'),
-                    },
+                image: {
+                    test: /\.(png|jpe?g|gif|svg|apng)(\?.*)?$/,
+                    use: {
+                        url: {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 10000,
+                                esModule: false,
+                                name: assetsPath('img/[name].[hash:7].[ext]'),
+                            },
+                        }
+                    }
                 },
-                {
-                    test: /\.(svg)(\?.*)?$/,
-                    loader: 'file-loader',
-                    options: {
-                        esModule: false,
-                        name: assetsPath('img/[name].[hash:7].[ext]'),
-                    },
-                },
-                {
+                media: {
                     test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        limit: 10000,
-                        name: assetsPath('media/[name].[hash:7].[ext]'),
-                    },
+                    use: {
+                        url: {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 10000,
+                                name: assetsPath('media/[name].[hash:7].[ext]'),
+                            },
+                        }
+                    }
                 },
-                {
+                font: {
                     test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        limit: 10000,
-                        esModule: false,
-                        name: assetsPath('fonts/[name].[hash:7].[ext]'),
-                    },
+                    use: {
+                        url: {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 10000,
+                                esModule: false,
+                                name: assetsPath('fonts/[name].[hash:7].[ext]'),
+                            },
+                        }
+                    }
                 },
-            ],
+            },
         },
-        plugins: [new VueLoaderPlugin()],
+        plugin: {
+            VueLoaderPlugin: {
+                plugin: VueLoaderPlugin
+            }
+        },
         node: {
             global: false,
             __filename: false,
             __dirname: false,
-        },
-    }
+        }
+    })
+
+    return webpackConfig
 }

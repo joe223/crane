@@ -9,6 +9,16 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 const cwd = process.cwd()
 
+function loadPlugin (name) {
+    return require(require.resolve(name, {
+        paths: [
+            cwd,
+            __dirname,
+            path.resolve(__dirname, '../')
+        ]
+    })).default
+}
+
 export function validateBuildConfig(buildConfig, moduleName) {
     if (
         !buildConfig.entry &&
@@ -26,33 +36,57 @@ export function resolvePath(filePath) {
 }
 
 export function createBuilderConfig(
-    buildConfig,
+    pageConfig,
     moduleName,
     clientEnv,
     buildType
 ) {
-    validateBuildConfig(buildConfig, moduleName)
+    const configBuilder = require(`./webpackConfig/webpack.${buildType}.conf`).default(pageConfig)
+    const baseOutput = pageConfig.output || moduleName
 
-    const conf = {
+    validateBuildConfig(pageConfig, moduleName)
+
+    config.plugins.forEach(plugin => {
+        let [resolvedPlugin, options] = typeof plugin === 'string'
+            // string
+            ? [loadPlugin(plugin)]
+            // [plugin, option]
+            : (
+                Array.isArray(plugin)
+                ? (typeof plugin[0] === 'function'
+                    ? [plugin[0], plugin[1]]
+                    : [loadPlugin(plugin[0]), plugin[1]])
+                // function
+                : [plugin]
+            )
+
+        resolvedPlugin({
+            configBuilder,
+            pageConfig,
+            moduleName,
+            clientEnv,
+            buildType
+        }, options)
+    })
+
+    const baseConfig = configBuilder.toConfig()
+    const extendConfig = {
         entry: {},
         plugins: [],
     }
-    const configBuilder = require(`./webpackConfig/webpack.${buildType}.conf`)
-
-    buildConfig.output = buildConfig.output || moduleName
 
     // Single entry file
-    if (buildConfig.entry) {
+    if (pageConfig.entry) {
+        const entry = pageConfig
         const defaultEntryName = 'index'
-        const entry = buildConfig
 
         entry.templateParameters = {
             WEB_ENV: clientEnv,
             ...entry.templateParameters,
         }
 
-        conf.entry[defaultEntryName] = resolvePath(entry.entry)
-        conf.plugins.push(
+        extendConfig.entry[defaultEntryName] = resolvePath(entry.entry)
+        extendConfig.plugins.push(
             genHtmlWebpackPluginConfig(
                 buildType,
                 entry,
@@ -62,50 +96,44 @@ export function createBuilderConfig(
         )
         // Multiple entry file
     } else {
-        Object.keys(buildConfig.entries).forEach((entryName) => {
-            const entry = buildConfig.entries[entryName]
+        Object.keys(pageConfig.entries).forEach((entryName) => {
+            const entry = pageConfig.entries[entryName]
 
             entry.templateParameters = {
                 WEB_ENV: clientEnv,
                 ...entry.templateParameters,
             }
 
-            conf.entry[entryName] = resolvePath(entry.entry)
-            conf.plugins.push(
+            extendConfig.entry[entryName] = resolvePath(entry.entry)
+            extendConfig.plugins.push(
                 genHtmlWebpackPluginConfig(
                     buildType,
                     entry,
                     entryName,
-                    entry.output || `${entryName}/index.html`
+                    entry.output || path.join(entryName, 'index.html')
                 )
             )
         })
     }
+
     if (buildType === BuildType.prod) {
-        conf.plugins.push(
+        extendConfig.plugins.push(
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
                 // both options are optional
-                filename:
-                    buildType === BuildType.prod
-                        ? '[name].[chunkhash].css'
-                        : '[name].css',
-                chunkFilename:
-                    buildType === BuildType.prod
-                        ? '[id].[chunkhash].css'
-                        : '[id].css',
+                filename: '[name].[chunkhash].css',
+                chunkFilename: '[id].[chunkhash].css'
             })
         )
     }
 
-    // conf.plugins.push(...customPlugins.pluginsList)
 
     // Set public static assets
     // copy custom static assets
-    if (buildConfig.static) {
+    if (pageConfig.static) {
         const staticAssets = [
             {
-                from: resolvePath(buildConfig.static),
+                from: resolvePath(pageConfig.static),
                 to: config.assetsSubDirectory,
                 globOptions: {
                     dot: false,
@@ -113,7 +141,7 @@ export function createBuilderConfig(
             },
         ]
 
-        conf.plugins.push(
+        extendConfig.plugins.push(
             new CopyWebpackPlugin({
                 patterns: staticAssets,
                 options: {
@@ -124,17 +152,17 @@ export function createBuilderConfig(
     }
 
     const webpackConfig = merge(
-        configBuilder(buildConfig),
+        baseConfig,
         {
             output: {
-                path: path.join(config.assetsRoot, buildConfig.output),
+                path: path.join(config.assetsRoot, baseOutput),
                 filename: '[name].[chunkhash].js',
-                publicPath: path.join(path.sep, buildConfig.output, path.sep),
+                publicPath: path.join(path.sep, baseOutput, path.sep),
             },
             plugins: [new webpack.EnvironmentPlugin(clientEnv)],
         },
-        conf,
-        buildConfig.webpack || {}
+        extendConfig,
+        pageConfig.webpack || {}
     )
 
     return webpackConfig
@@ -155,15 +183,26 @@ export function builder(builderConfig, dev = false) {
             )
         })
     } else {
-        const compiler = webpack(builderConfig)
-
-        compiler.run((err, stats) => {
+        webpack(builderConfig, (err, stats) => {
+            // https://webpack.js.org/api/node/#error-handling
             if (err) {
-                console.log(err)
-            } else {
-                console.log(stats)
+                console.error(err.stack || err);
+                if (err.details) {
+                    console.error(err.details);
+                }
+                return;
             }
-        })
+
+            const info = stats.toJson();
+
+            if (stats.hasErrors()) {
+                console.error(info.errors);
+            }
+
+            if (stats.hasWarnings()) {
+                console.warn(info.warnings);
+            }
+        });
     }
 }
 

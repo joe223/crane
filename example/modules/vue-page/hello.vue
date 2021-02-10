@@ -12,6 +12,6 @@ export default {
 
 <style lang="less">
     div {
-        color: aquamarine;
+        color: rgb(107, 107, 221);
     }
 </style>

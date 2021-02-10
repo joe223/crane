@@ -14,7 +14,7 @@ const defaultConfig = {
     // https://webpack.js.org/configuration/dev-server/
     devServer: {
         hot: true,
-        port: 8080,
+        port: process.env.PORT && Number(process.env.PORT),
         open: true,
         overlay: true,
     },
@@ -42,7 +42,6 @@ const defaultConfig = {
         /**
          * Source Maps
          */
-
         productionSourceMap: process.env.CRANE_BUILD_MODE !== 'production',
         // https://webpack.js.org/configuration/devtool/#production
         devtool: 'source-map',
@@ -62,6 +61,8 @@ const defaultConfig = {
     },
 
     pages: [],
+
+    plugins: []
 }
 const config = deepmerge(
     defaultConfig,

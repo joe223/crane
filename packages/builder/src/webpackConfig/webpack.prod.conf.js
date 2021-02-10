@@ -10,11 +10,13 @@ import OptimizeCSSPlugin from 'optimize-css-assets-webpack-plugin'
 import CompressionWebpackPlugin from 'compression-webpack-plugin'
 import genBaseWebpackConfig from './webpack.base.conf'
 
-module.exports = function (pageConfig) {
-    const baseWebpackConfig = genBaseWebpackConfig(pageConfig)
-    const webpackConfig = merge(baseWebpackConfig, {
+export default function (pageConfig) {
+    const baseConfig = genBaseWebpackConfig(pageConfig)
+
+    baseConfig.merge({
+        mode: 'production',
         module: {
-            rules: utils.styleLoaders({
+            rule: utils.styleLoaders({
                 sourceMap: config.build.productionSourceMap,
                 extract: true,
                 usePostCSS: true,
@@ -23,7 +25,6 @@ module.exports = function (pageConfig) {
         devtool: config.build.productionSourceMap
             ? config.build.devtool
             : false,
-        mode: 'production',
         optimization: {
             moduleIds: 'deterministic',
             splitChunks: {
@@ -52,21 +53,5 @@ module.exports = function (pageConfig) {
         ],
     })
 
-    if (config.build.productionGzip) {
-        webpackConfig.plugins.push(
-            new CompressionWebpackPlugin({
-                asset: '[path].gz[query]',
-                algorithm: 'gzip',
-                test: new RegExp(
-                    '\\.(' +
-                        config.build.productionGzipExtensions.join('|') +
-                        ')$'
-                ),
-                threshold: 10240,
-                minRatio: 0.8,
-            })
-        )
-    }
-
-    return webpackConfig
+    return baseConfig
 }

@@ -34,6 +34,7 @@
     "@types/deepmerge": "^2.2.0",
     "deepmerge": "^4.2.2",
     "dotenv": "^8.2.0",
-    "dotenv-expand": "^5.1.0"
+    "dotenv-expand": "^5.1.0",
+    "webpack-chain": "^6.5.1"
   }
 }
