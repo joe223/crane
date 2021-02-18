@@ -10,9 +10,18 @@ import OptimizeCSSPlugin from 'optimize-css-assets-webpack-plugin'
 import CompressionWebpackPlugin from 'compression-webpack-plugin'
 import genBaseWebpackConfig from './webpack.base.conf'
 
-export default function (pageConfig) {
-    const baseConfig = genBaseWebpackConfig(pageConfig)
-
+export default function (
+    pageConfig,
+    moduleName,
+    clientEnv,
+    buildType
+) {
+    const baseConfig = genBaseWebpackConfig(
+        pageConfig,
+        moduleName,
+        clientEnv,
+        buildType
+    )
     baseConfig.merge({
         mode: 'production',
         module: {

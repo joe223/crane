@@ -41,7 +41,12 @@ export function createBuilderConfig(
     clientEnv,
     buildType
 ) {
-    const configBuilder = require(`./webpackConfig/webpack.${buildType}.conf`).default(pageConfig)
+    const configBuilder = require(`./webpackConfig/webpack.${buildType}.conf`).default(
+        pageConfig,
+        moduleName,
+        clientEnv,
+        buildType
+    )
     const baseOutput = pageConfig.output || moduleName
 
     validateBuildConfig(pageConfig, moduleName)
@@ -170,7 +175,7 @@ export function createBuilderConfig(
 
 export function builder(builderConfig, dev = false) {
     if (dev) {
-        const options = config.devServer
+        const options = builderConfig.find(conf => Boolean(conf.devServer)).devServer
         const server = new WebpackDevServer(webpack(builderConfig), options)
 
         server.listen(options.port, 'localhost', function (err) {

@@ -8,8 +8,19 @@ import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin'
 import genBaseWebpackConfig from './webpack.base.conf'
 import * as utils from './utils'
 
-export default function (pageConfig) {
-    const baseConfig = genBaseWebpackConfig(pageConfig)
+
+export default function (
+    pageConfig,
+    moduleName,
+    clientEnv,
+    buildType
+) {
+    const baseConfig = genBaseWebpackConfig(
+        pageConfig,
+        moduleName,
+        clientEnv,
+        buildType
+    )
 
     baseConfig.merge({
         mode: 'development',
@@ -33,9 +44,6 @@ export default function (pageConfig) {
         plugin: {
             HotModuleReplacementPlugin: {
                 plugin: webpack.HotModuleReplacementPlugin
-            },
-            FriendlyErrorsWebpackPlugin: {
-                plugin: FriendlyErrorsWebpackPlugin
             },
         },
     })

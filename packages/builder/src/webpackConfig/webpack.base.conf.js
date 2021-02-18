@@ -2,6 +2,7 @@ import { config, logger } from '@cranejs/shared'
 import * as path from 'path'
 import WebpackConfig from 'webpack-chain'
 import createVueLoaderConfig from './vue-loader.conf'
+import WebpackLogs from './plugins/Logs'
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const cwd = process.cwd()
@@ -21,7 +22,12 @@ const createLintingRule = () => ({
 })
 const assetsPath = (p) => path.join('assets', p)
 
-export default function genBaseWebpackConfig(pageConfig) {
+export default function genBaseWebpackConfig(
+    pageConfig,
+    moduleName,
+    clientEnv,
+    buildType
+) {
     const webpackConfig = new WebpackConfig()
 
     webpackConfig.merge({
@@ -132,6 +138,15 @@ export default function genBaseWebpackConfig(pageConfig) {
         plugin: {
             VueLoaderPlugin: {
                 plugin: VueLoaderPlugin
+            },
+            WebpackLogs: {
+                plugin: WebpackLogs,
+                args: [
+                    {
+                        name: moduleName,
+                        clear: true
+                    }
+                ]
             }
         },
         node: {
