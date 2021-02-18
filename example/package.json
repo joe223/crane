@@ -1,7 +1,7 @@
 {
   "name": "@cranejs/example",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "crane.config.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@cranejs/cli": "^0.0.2",
+    "@cranejs/cli": "^0.0.3",
     "core-js": "^3.8.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
