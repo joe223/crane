@@ -4,6 +4,9 @@
   "description": "> TODO: description",
   "author": "JoeHarris <heyin223@gmail.com>",
   "homepage": "https://github.com/joe223/crane#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
@@ -72,5 +75,6 @@
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3",
     "webpackbar": "^5.0.0-3"
-  }
+  },
+  "gitHead": "beae472c28a4ea5c99cfde476a1d4b656138de11"
 }

@@ -4,6 +4,9 @@
   "description": "Core module",
   "author": "JoeHarris",
   "homepage": "https://github.com/joe223/crane#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -36,5 +39,6 @@
     "dotenv": "^8.2.0",
     "dotenv-expand": "^5.1.0",
     "webpack-chain": "^6.5.1"
-  }
+  },
+  "gitHead": "beae472c28a4ea5c99cfde476a1d4b656138de11"
 }

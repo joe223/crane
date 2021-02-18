@@ -4,6 +4,9 @@
   "description": "> TODO: description",
   "author": "JoeHarris <heyin223@gmail.com>",
   "homepage": "https://github.com/joe223/crane#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "types": "types/index.d.ts",
   "bin": {
@@ -36,5 +39,6 @@
     "@cranejs/shared": "^0.0.3",
     "enquirer": "^2.3.6",
     "webpack-chain": "^6.5.1"
-  }
+  },
+  "gitHead": "beae472c28a4ea5c99cfde476a1d4b656138de11"
 }

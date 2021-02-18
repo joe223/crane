@@ -4,6 +4,9 @@
   "description": "> TODO: description",
   "author": "hezaichang <heyin223@gmail.com>",
   "homepage": "https://github.com/joe223/crane#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "main": "lib/index.js",
   "directories": {
@@ -31,5 +34,6 @@
     "@vue/babel-preset-jsx": "^1.2.4",
     "babel-merge": "^3.0.0",
     "webpack-chain": "^6.5.1"
-  }
+  },
+  "gitHead": "beae472c28a4ea5c99cfde476a1d4b656138de11"
 }
