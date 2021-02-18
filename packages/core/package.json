@@ -1,6 +1,6 @@
 {
   "name": "@cranejs/core",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Core module",
   "author": "JoeHarris",
   "homepage": "https://github.com/joe223/crane#readme",
@@ -29,8 +29,8 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "@cranejs/builder": "^0.0.1",
-    "@cranejs/shared": "^0.0.1",
+    "@cranejs/builder": "^0.0.2",
+    "@cranejs/shared": "^0.0.2",
     "@types/deepmerge": "^2.2.0",
     "deepmerge": "^4.2.2",
     "dotenv": "^8.2.0",

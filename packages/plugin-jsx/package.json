@@ -1,6 +1,6 @@
 {
   "name": "@cranejs/plugin-jsx",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "> TODO: description",
   "author": "hezaichang <heyin223@gmail.com>",
   "homepage": "https://github.com/joe223/crane#readme",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@babel/preset-react": "^7.12.13",
-    "@cranejs/shared": "^0.0.1",
+    "@cranejs/shared": "^0.0.2",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
     "@vue/babel-preset-jsx": "^1.2.4",
     "babel-merge": "^3.0.0",
