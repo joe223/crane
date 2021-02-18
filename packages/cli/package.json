@@ -1,6 +1,6 @@
 {
   "name": "@cranejs/cli",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "> TODO: description",
   "author": "JoeHarris <heyin223@gmail.com>",
   "homepage": "https://github.com/joe223/crane#readme",
@@ -34,9 +34,9 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "@cranejs/core": "^0.0.2",
-    "@cranejs/plugin-jsx": "^0.0.3",
-    "@cranejs/shared": "^0.0.3",
+    "@cranejs/core": "^0.0.3",
+    "@cranejs/plugin-jsx": "^0.0.4",
+    "@cranejs/shared": "^0.0.4",
     "enquirer": "^2.3.6",
     "webpack-chain": "^6.5.1"
   },
