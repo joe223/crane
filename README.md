@@ -63,6 +63,8 @@ WEB_APP_NAME = 'Crane'
 
 **crane.config.js**
 ```javascript
+module.exports = {
+    pages: {
         index: {
             title: 'Crane',
             entry: 'index/index.js',
@@ -89,6 +91,8 @@ WEB_APP_NAME = 'Crane'
             // output html file: /react-app
             output: 'react-app'
         }
+    }
+}
 ```
 
 ### JSX
