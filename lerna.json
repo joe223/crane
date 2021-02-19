@@ -4,5 +4,10 @@
     "packages/*",
     "example"
   ],
+  "command": {
+    "publish": {
+      "message": "chore(release): publish"
+    }
+  },
   "version": "independent"
 }
